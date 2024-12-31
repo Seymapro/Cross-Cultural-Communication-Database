@@ -36,6 +36,7 @@ cur.execute("""CREATE TABLE IF NOT EXISTS Expressions (
     FOREIGN KEY(meaning_id) REFERENCES Meanings(id)
 )WITHOUT ROWID; """) 
 
+# An example
 cur.execute("""INSERT INTO Languages
             VALUES(1, 'English'); """)
 
@@ -52,31 +53,3 @@ cur.execute("""INSERT INTO Expressions
             VALUES(1, 'Gesture', 1, 1, 1, 'direct eye contact', 1); """)
 
 con.commit()
-
-
-
-# # # 2 tane tablo yarat. 1 tablo: anlamlar/2. tablo: expressionlar
-# # EXRPRESSIONLAR
-# # expression_id = int
-# # expression_type = str (ifade türleri(jest,mimik vs.))
-# # language_id = int
-# # country_id = int
-# # culture_id = int
-# # expression_description = str
-# # meaning_id = int
-
-# # ANLAMLAR 
-# # meaning_id = int
-# # meaning_description = str
-
-# # ÜLKELER 
-# # country_id = int
-# # country_name = str
-
-# # KÜLTÜRLER
-# # culture_id = int
-# # culture_name = str
-
-# # DİLLER
-# # language_id = int
-# # language_name = str
