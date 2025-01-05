@@ -28,6 +28,7 @@ Example python usage to retrieve and display information from the database:
 
 ```python
 import sqlite3
+from tabulate import tabulate # use it to make the output look prettier
 
 conn = sqlite3.connect('culture_lib.db')
 cursor = conn.cursor()
@@ -36,12 +37,9 @@ cursor = conn.cursor()
 cursor.execute("SELECT * FROM Expressions WHERE culture_id = 1")
 rows = cursor.fetchall()
 
-# Print headers
-print(f"ID\tType\tLanguage\tCountry\tCulture\tDescription\tMeaning")
+headers = ["ID", "Type", "Language", "Country", "Culture", "Description", "Meaning"]
 
-# Print rows
-for row in rows:
-    print(f"{row[0]}\t{row[1]}\t{row[2]}\t{row[3]}\t{row[4]}\t{row[5]}\t{row[6]}")
+print(tabulate(rows, headers=headers, tablefmt="grid"))
 
 conn.close()
 ````
