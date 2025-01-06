@@ -84,10 +84,13 @@ connection.close()
 
 ```
 And the output would be:
-![image](https://github.com/user-attachments/assets/84f82769-73d0-44ab-bb68-f4019ebd5ad7)
+
 
 An ER diagram to help visualize better:
-![ER_Diagram_CulturalBridge](https://github.com/user-attachments/assets/67e68443-3e82-43aa-a3e3-581a34155123)
+
+![cultural_diagram](https://github.com/user-attachments/assets/f0a33a93-04f7-4761-b7a6-858358adaab6)
+ER Diagram of the CulturalBridge Database. 
+Generated using dbdiagram.io (https://dbdiagram.io).
 
 
 ### Data Population
