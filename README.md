@@ -12,37 +12,83 @@ The **CulturalBridge Database** is a relational database designed to address cha
 ### Example SQL Queries:
   *   Retrieve all expressions for a specific culture:
   ```sql
-  SELECT * FROM Expressions WHERE culture_id = 1;
+  SELECT 
+    e.type,
+    e.description AS expression_description,
+    l.name AS language_name,
+    c.name AS country_name,
+    cul.name AS culture_name,
+    m.description AS meaning_description
+FROM Expressions e
+JOIN Languages l ON e.language_id = l.id
+JOIN Countries c ON e.country_id = c.id
+JOIN Cultures cul ON e.culture_id = cul.id
+JOIN Meanings m ON e.meaning_id = m.id
+WHERE cul.id = 2
   ```
+The Result Would be:
+![image](https://github.com/user-attachments/assets/174afa0b-87a8-49c4-ab94-26dc45159c05)
+
 *   Find equivalent expressions in another language:
   ```sql
-  SELECT * FROM Expressions WHERE language_id = 2;
+  SELECT
+    e.type,
+    e.description AS expression_description,
+    l.name AS language_name,
+    c.name AS country_name,
+    cul.name AS culture_name,
+    m.description AS meaning_description
+FROM Expressions e
+JOIN Languages l ON e.language_id = l.id
+JOIN Countries c ON e.country_id = c.id
+JOIN Cultures cul ON e.culture_id = cul.id
+JOIN Meanings m ON e.meaning_id = m.id
+WHERE l.id = 2;
   ```
-*   Retrieve meanings associated with a particular ID:
-  ```sql
-  SELECT description FROM Meanings WHERE id= 2;
-  ```
-  These queries can be used to retrieve specific types of information from the database.
+The result would be:
+![image](https://github.com/user-attachments/assets/a3c70bb4-5061-4f5e-bcd3-a42ab081d793)
+
+These queries can be used to retrieve specific types of information from the database.
 
 Example python usage to retrieve and display information from the database:
 
 ```python
 import sqlite3
-from tabulate import tabulate # use it to make the output look prettier
+from tabulate import tabulate #not necessary, but makes the output look prettier
 
-conn = sqlite3.connect('culture_lib.db')
-cursor = conn.cursor()
+connection = sqlite3.connect('culture_lib.db')
+cursor = connection.cursor()
 
-# Example query
-cursor.execute("SELECT * FROM Expressions WHERE culture_id = 1")
-rows = cursor.fetchall()
+query = """
+SELECT
+    e.type,
+    e.description AS expression_description,
+    l.name AS language_name,
+    c.name AS country_name,
+    cul.name AS culture_name,
+    m.description AS meaning_description
+FROM Expressions e
+JOIN Languages l ON e.language_id = l.id
+JOIN Countries c ON e.country_id = c.id
+JOIN Cultures cul ON e.culture_id = cul.id
+JOIN Meanings m ON e.meaning_id = m.id
+WHERE c.id = 3;
+"""
+cursor.execute(query)
 
-headers = ["ID", "Type", "Language", "Country", "Culture", "Description", "Meaning"]
+results = cursor.fetchall()
+headers = ["Type", "Description", "Language", "Country", "Culture", "Meaning"]
+print(tabulate(results, headers=headers, tablefmt="grid"))
 
-print(tabulate(rows, headers=headers, tablefmt="grid"))
+connection.close()
 
-conn.close()
-````
+```
+And the output would be:
+![image](https://github.com/user-attachments/assets/84f82769-73d0-44ab-bb68-f4019ebd5ad7)
+
+An ER diagram to help visualize better:
+![ER_Diagram_CulturalBridge](https://github.com/user-attachments/assets/67e68443-3e82-43aa-a3e3-581a34155123)
+
 
 ### Data Population
 Currently, the database contains synthetic data for testing purposes. Additional data can be incorporated by:
